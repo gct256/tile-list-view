@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "react",
+    "stage-2",
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [">= 0.1%", "ie >= 11", "not dead"]
+        },
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": ["external-helpers"]
+}
