@@ -6,6 +6,13 @@ var React = _interopDefault(require('react'));
 var PropTypes = _interopDefault(require('prop-types'));
 var styleProptype = _interopDefault(require('react-style-proptype'));
 
+/**
+ * get elements scroll position.
+ *
+ * @param {string} name scroll parameter name (scrollTop or scrollLeft)
+ * @param {HTMLElement} element target.
+ * @returns {number} scroll position.
+ */
 function getScroll(name, element) {
   if (element === null) {
     return 0;
@@ -18,10 +25,24 @@ function getScroll(name, element) {
   return value + getScroll(name, element.parentNode);
 }
 
+/**
+ * calculate the count of columns of a tile.
+ *
+ * @param {HTMLDivElement} div container element.
+ * @param {number} cellWidth cell width.
+ * @returns {number} col count.
+ */
 function getCols(div, cellWidth) {
   return Math.max(1, Math.floor(div.offsetWidth / cellWidth));
 }
 
+/**
+ * generate an array of consecutive numerical values.
+ *
+ * @param {number} pivot pivot index.
+ * @param {number} index traget index.
+ * @returns {number[]} result.
+ */
 function makeRange(pivot, index) {
   if (pivot === -1) {
     return makeRange(0, index);
@@ -37,6 +58,12 @@ function makeRange(pivot, index) {
   return result;
 }
 
+/**
+ * merge class name.
+ *
+ * @param {string[]} classNames class names.
+ * @returns {string} merged class name.
+ */
 function mergeClassNames() {
   for (var _len = arguments.length, classNames = Array(_len), _key = 0; _key < _len; _key++) {
     classNames[_key] = arguments[_key];
@@ -120,7 +147,7 @@ var toConsumableArray = function (arr) {
 };
 
 /**
- * Item
+ * Tile view list item component
  */
 
 var Item = function (_React$PureComponent) {
@@ -154,20 +181,19 @@ var Item = function (_React$PureComponent) {
   return Item;
 }(React.PureComponent);
 
-
 Item.propTypes = {
+  /** element width of item. */
   width: PropTypes.number.isRequired,
+
+  /** element height of item. */
   height: PropTypes.number.isRequired,
+
+  /** child nodes. */
   children: PropTypes.node
 };
-
 Item.defaultProps = {
   children: null
 };
-
-/**
- * Tile list view
- */
 
 var componentStyle = {
   padding: 0,
@@ -194,6 +220,10 @@ var keyMap = {
   right: { dx: 1, dy: 0 }
 };
 
+/**
+ * Tile list view
+ */
+
 var TileListView = function (_React$Component) {
   inherits(TileListView, _React$Component);
 
@@ -203,10 +233,16 @@ var TileListView = function (_React$Component) {
     var _this = possibleConstructorReturn(this, (TileListView.__proto__ || Object.getPrototypeOf(TileListView)).call(this, props));
 
     _this.state = {
+      /** index of cursor. */
       cursor: -1,
+
+      /** index of pivot. */
       pivot: -1,
+
+      /** flag for element focus. */
       focused: false
     };
+
 
     _this.handleClick = _this.handleClick.bind(_this);
     _this.handleKeyDown = _this.handleKeyDown.bind(_this);
@@ -399,23 +435,40 @@ var TileListView = function (_React$Component) {
   return TileListView;
 }(React.Component);
 
-
 TileListView.propTypes = {
+  /** tile items. */
   items: PropTypes.arrayOf(PropTypes.node).isRequired,
+
+  /** element width of item. */
   itemWidth: PropTypes.number.isRequired,
+
+  /** element height of item. */
   itemHeight: PropTypes.number.isRequired,
+
+  /** array of selected index number. */
   selection: PropTypes.arrayOf(PropTypes.number).isRequired,
 
+  /** style for view element. */
   style: styleProptype,
+
+  /** className for view element. */
   className: PropTypes.string,
+
+  /** style for view element at focused. */
   focusedStyle: styleProptype,
+
+  /** className for view element at focused. */
   focusedClassName: PropTypes.string,
 
+  /** callback for update selection. */
   onUpdateSelection: PropTypes.func,
+
+  /** callback for update cursor index. */
   onUpdateCursor: PropTypes.func,
+
+  /** callback for update pivot index. */
   onUpdatePivot: PropTypes.func
 };
-
 TileListView.defaultProps = {
   style: {},
   className: '',
