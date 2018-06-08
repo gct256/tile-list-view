@@ -105,8 +105,10 @@ export default class TileListView extends React.Component {
   };
 
   handleClick(event) {
-    const { itemWidth, itemHeight, selection } = this.props;
-    const { pivot } = this.state;
+    const {
+      itemWidth, itemHeight, selection, items,
+    } = this.props;
+    const { cursor, pivot } = this.state;
 
     const div = event.currentTarget;
     const cols = getCols(div, itemWidth);
@@ -126,6 +128,10 @@ export default class TileListView extends React.Component {
     const col = Math.floor((x + offsetX) / itemWidth);
     const row = Math.floor((y + offsetY) / itemHeight);
     const index = col + row * cols;
+    if (index >= items.length) {
+      this._select([], cursor, pivot);
+      return;
+    }
 
     if (event.ctrlKey || event.metaKey) {
       if (selection.indexOf(index) < 0) {

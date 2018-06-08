@@ -253,8 +253,11 @@ var TileListView = function (_React$Component) {
       var _props = this.props,
           itemWidth = _props.itemWidth,
           itemHeight = _props.itemHeight,
-          selection = _props.selection;
-      var pivot = this.state.pivot;
+          selection = _props.selection,
+          items = _props.items;
+      var _state = this.state,
+          cursor = _state.cursor,
+          pivot = _state.pivot;
 
 
       var div = event.currentTarget;
@@ -278,6 +281,10 @@ var TileListView = function (_React$Component) {
       var col = Math.floor((x + offsetX) / itemWidth);
       var row = Math.floor((y + offsetY) / itemHeight);
       var index = col + row * cols;
+      if (index >= items.length) {
+        this._select([], cursor, pivot);
+        return;
+      }
 
       if (event.ctrlKey || event.metaKey) {
         if (selection.indexOf(index) < 0) {
@@ -315,9 +322,9 @@ var TileListView = function (_React$Component) {
           itemWidth = _props2.itemWidth,
           itemHeight = _props2.itemHeight,
           selection = _props2.selection;
-      var _state = this.state,
-          cursor = _state.cursor,
-          pivot = _state.pivot;
+      var _state2 = this.state,
+          cursor = _state2.cursor,
+          pivot = _state2.pivot;
 
       if (!items) return;
 
