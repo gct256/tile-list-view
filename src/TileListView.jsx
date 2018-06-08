@@ -67,6 +67,9 @@ export default class TileListView extends React.Component {
 
     /** callback for update pivot index. */
     onUpdatePivot: PropTypes.func,
+
+    /** callback for key down. */
+    onKeyDown: PropTypes.func,
   };
 
   static defaultProps = {
@@ -78,6 +81,7 @@ export default class TileListView extends React.Component {
     onUpdateSelection() {},
     onUpdateCursor() {},
     onUpdatePivot() {},
+    onKeyDown() {},
   };
 
   constructor(props) {
@@ -141,7 +145,12 @@ export default class TileListView extends React.Component {
   handleKeyDown(event) {
     const key = `${event.key}`.toLowerCase();
 
-    if (!(key in keyMap) && key !== ' ') return;
+    if (!(key in keyMap) && key !== ' ') {
+      if (this.props.onKeyDown) {
+        this.props.onKeyDown(event);
+      }
+      return;
+    }
 
     event.preventDefault();
     event.stopPropagation();

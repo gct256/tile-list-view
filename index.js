@@ -304,7 +304,12 @@ var TileListView = function (_React$Component) {
     value: function handleKeyDown(event) {
       var key = ('' + event.key).toLowerCase();
 
-      if (!(key in keyMap) && key !== ' ') return;
+      if (!(key in keyMap) && key !== ' ') {
+        if (this.props.onKeyDown) {
+          this.props.onKeyDown(event);
+        }
+        return;
+      }
 
       event.preventDefault();
       event.stopPropagation();
@@ -467,7 +472,10 @@ TileListView.propTypes = {
   onUpdateCursor: PropTypes.func,
 
   /** callback for update pivot index. */
-  onUpdatePivot: PropTypes.func
+  onUpdatePivot: PropTypes.func,
+
+  /** callback for key down. */
+  onKeyDown: PropTypes.func
 };
 TileListView.defaultProps = {
   style: {},
@@ -477,7 +485,8 @@ TileListView.defaultProps = {
 
   onUpdateSelection: function onUpdateSelection() {},
   onUpdateCursor: function onUpdateCursor() {},
-  onUpdatePivot: function onUpdatePivot() {}
+  onUpdatePivot: function onUpdatePivot() {},
+  onKeyDown: function onKeyDown() {}
 };
 
 module.exports = TileListView;
