@@ -252,6 +252,18 @@ var TileListView = function (_React$Component) {
   }
 
   createClass(TileListView, [{
+    key: 'getSnapshotBeforeUpdate',
+    value: function getSnapshotBeforeUpdate() {
+      var last = this.props.items.length - 1;
+      var cursor = last < this.state.cursor ? last : this.state.cursor;
+      var pivot = last < this.state.pivot ? last : this.state.pivot;
+      if (this.state.cursor !== cursor || this.state.pivot !== pivot) {
+        this.setState({ cursor: cursor, pivot: pivot });
+        if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
+        if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+      }
+    }
+  }, {
     key: 'handleClick',
     value: function handleClick(event) {
       var _props = this.props,

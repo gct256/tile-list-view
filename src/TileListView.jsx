@@ -104,6 +104,17 @@ export default class TileListView extends React.Component {
     focused: false,
   };
 
+  getSnapshotBeforeUpdate() {
+    const last = this.props.items.length - 1;
+    const cursor = last < this.state.cursor ? last : this.state.cursor;
+    const pivot = last < this.state.pivot ? last : this.state.pivot;
+    if (this.state.cursor !== cursor || this.state.pivot !== pivot) {
+      this.setState({ cursor, pivot });
+      if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
+      if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+    }
+  }
+
   handleClick(event) {
     const {
       itemWidth, itemHeight, selection, items,
