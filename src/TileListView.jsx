@@ -121,7 +121,7 @@ export default class TileListView extends React.Component {
     const offsetY = div.scrollTop - getScroll('scrollTop', div.parentNode);
 
     if (x + offsetX >= cols * itemWidth) {
-      this._select([], -1, -1);
+      this._select([], cursor, pivot);
       return;
     }
 
