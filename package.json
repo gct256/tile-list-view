@@ -26,9 +26,18 @@
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^3.3.0"
   },
+  "author": "gct256+github@gmail.com",
   "dependencies": {
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-style-proptype": "^3.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gct256/tile-list-view.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gct256/tile-list-view/issues"
+  },
+  "homepage": "https://github.com/gct256/tile-list-view#readme"
 }
