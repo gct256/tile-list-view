@@ -113,6 +113,11 @@ export default class TileListView extends React.Component {
       if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
       if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
     }
+    return null;
+  }
+
+  componentDidUpdate() {
+    //
   }
 
   handleClick(event) {

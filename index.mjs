@@ -258,6 +258,12 @@ var TileListView = function (_React$Component) {
         if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
         if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
       }
+      return null;
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      //
     }
   }, {
     key: 'handleClick',
