@@ -47,6 +47,9 @@ export default class TileListView extends React.Component {
     /** array of selected index number. */
     selection: PropTypes.arrayOf(PropTypes.number).isRequired,
 
+    /** index of cursor. */
+    cursor: PropTypes.number.isRequired,
+
     /** style for view element. */
     style: styleProptype,
 
@@ -65,9 +68,6 @@ export default class TileListView extends React.Component {
     /** callback for update cursor index. */
     onUpdateCursor: PropTypes.func,
 
-    /** callback for update pivot index. */
-    onUpdatePivot: PropTypes.func,
-
     /** callback for key down. */
     onKeyDown: PropTypes.func,
   };
@@ -80,7 +80,6 @@ export default class TileListView extends React.Component {
 
     onUpdateSelection() {},
     onUpdateCursor() {},
-    onUpdatePivot() {},
     onKeyDown() {},
   };
 
@@ -94,9 +93,6 @@ export default class TileListView extends React.Component {
   }
 
   state = {
-    /** index of cursor. */
-    cursor: -1,
-
     /** index of pivot. */
     pivot: -1,
 
@@ -106,12 +102,9 @@ export default class TileListView extends React.Component {
 
   getSnapshotBeforeUpdate() {
     const last = this.props.items.length - 1;
-    const cursor = last < this.state.cursor ? last : this.state.cursor;
     const pivot = last < this.state.pivot ? last : this.state.pivot;
-    if (this.state.cursor !== cursor || this.state.pivot !== pivot) {
-      this.setState({ cursor, pivot });
-      if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
-      if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+    if (this.state.pivot !== pivot) {
+      this.setState({ pivot });
     }
     return null;
   }
@@ -122,9 +115,9 @@ export default class TileListView extends React.Component {
 
   handleClick(event) {
     const {
-      itemWidth, itemHeight, selection, items,
+      itemWidth, itemHeight, selection, cursor, items,
     } = this.props;
-    const { cursor, pivot } = this.state;
+    const { pivot } = this.state;
 
     const div = event.currentTarget;
     const cols = getCols(div, itemWidth);
@@ -178,9 +171,9 @@ export default class TileListView extends React.Component {
     event.stopPropagation();
 
     const {
-      items, itemWidth, itemHeight, selection,
+      items, itemWidth, itemHeight, selection, cursor,
     } = this.props;
-    const { cursor, pivot } = this.state;
+    const { pivot } = this.state;
     if (!items) return;
 
     if (key === ' ') {
@@ -237,14 +230,14 @@ export default class TileListView extends React.Component {
     const selectionUpdated =
       newSelection.length !== this.props.selection.length ||
       !newSelection.every(x => this.props.selection.indexOf(x) >= 0);
-    if (this.state.cursor === cursor && this.state.pivot === pivot && !selectionUpdated) return;
+    if (this.props.cursor === cursor && this.state.pivot === pivot && !selectionUpdated) return;
 
     if (selectionUpdated) this.props.onUpdateSelection(newSelection);
-    if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
-    if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+    if (this.props.cursor !== cursor) {
+      this.props.onUpdateCursor(cursor);
+    }
 
     this.setState({
-      cursor,
       pivot,
     });
   }

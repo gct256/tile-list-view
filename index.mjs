@@ -229,9 +229,6 @@ var TileListView = function (_React$Component) {
     var _this = possibleConstructorReturn(this, (TileListView.__proto__ || Object.getPrototypeOf(TileListView)).call(this, props));
 
     _this.state = {
-      /** index of cursor. */
-      cursor: -1,
-
       /** index of pivot. */
       pivot: -1,
 
@@ -251,12 +248,9 @@ var TileListView = function (_React$Component) {
     key: 'getSnapshotBeforeUpdate',
     value: function getSnapshotBeforeUpdate() {
       var last = this.props.items.length - 1;
-      var cursor = last < this.state.cursor ? last : this.state.cursor;
       var pivot = last < this.state.pivot ? last : this.state.pivot;
-      if (this.state.cursor !== cursor || this.state.pivot !== pivot) {
-        this.setState({ cursor: cursor, pivot: pivot });
-        if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
-        if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+      if (this.state.pivot !== pivot) {
+        this.setState({ pivot: pivot });
       }
       return null;
     }
@@ -272,10 +266,9 @@ var TileListView = function (_React$Component) {
           itemWidth = _props.itemWidth,
           itemHeight = _props.itemHeight,
           selection = _props.selection,
+          cursor = _props.cursor,
           items = _props.items;
-      var _state = this.state,
-          cursor = _state.cursor,
-          pivot = _state.pivot;
+      var pivot = this.state.pivot;
 
 
       var div = event.currentTarget;
@@ -339,10 +332,9 @@ var TileListView = function (_React$Component) {
           items = _props2.items,
           itemWidth = _props2.itemWidth,
           itemHeight = _props2.itemHeight,
-          selection = _props2.selection;
-      var _state2 = this.state,
-          cursor = _state2.cursor,
-          pivot = _state2.pivot;
+          selection = _props2.selection,
+          cursor = _props2.cursor;
+      var pivot = this.state.pivot;
 
       if (!items) return;
 
@@ -410,14 +402,14 @@ var TileListView = function (_React$Component) {
       var selectionUpdated = newSelection.length !== this.props.selection.length || !newSelection.every(function (x) {
         return _this2.props.selection.indexOf(x) >= 0;
       });
-      if (this.state.cursor === cursor && this.state.pivot === pivot && !selectionUpdated) return;
+      if (this.props.cursor === cursor && this.state.pivot === pivot && !selectionUpdated) return;
 
       if (selectionUpdated) this.props.onUpdateSelection(newSelection);
-      if (this.state.cursor !== cursor) this.props.onUpdateCursor(cursor);
-      if (this.state.pivot !== pivot) this.props.onUpdatePivot(pivot);
+      if (this.props.cursor !== cursor) {
+        this.props.onUpdateCursor(cursor);
+      }
 
       this.setState({
-        cursor: cursor,
         pivot: pivot
       });
     }
@@ -474,6 +466,9 @@ TileListView.propTypes = {
   /** array of selected index number. */
   selection: PropTypes.arrayOf(PropTypes.number).isRequired,
 
+  /** index of cursor. */
+  cursor: PropTypes.number.isRequired,
+
   /** style for view element. */
   style: styleProptype,
 
@@ -492,9 +487,6 @@ TileListView.propTypes = {
   /** callback for update cursor index. */
   onUpdateCursor: PropTypes.func,
 
-  /** callback for update pivot index. */
-  onUpdatePivot: PropTypes.func,
-
   /** callback for key down. */
   onKeyDown: PropTypes.func
 };
@@ -506,7 +498,6 @@ TileListView.defaultProps = {
 
   onUpdateSelection: function onUpdateSelection() {},
   onUpdateCursor: function onUpdateCursor() {},
-  onUpdatePivot: function onUpdatePivot() {},
   onKeyDown: function onKeyDown() {}
 };
 

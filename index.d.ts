@@ -8,6 +8,7 @@ declare namespace TileListView {
     itemWidth: number;
     itemHeight: number;
     selection: number[];
+    cursor: number;
 
     style?: CSS.Properties<string | number>;
     className?: string;
@@ -16,7 +17,6 @@ declare namespace TileListView {
 
     onUpdateSelection?: (selection: number[]) => void;
     onUpdateCursor?: (cursor: number) => void;
-    onUpdatePivot?: (pivot: number) => void;
     onKeyDown?: (event: KeyboardEvent) => void;
   }
 }
