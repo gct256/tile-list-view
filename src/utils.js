@@ -25,7 +25,7 @@ export function getScroll(name, element) {
  * @returns {number} col count.
  */
 export function getCols(div, cellWidth) {
-  return Math.max(1, Math.floor(div.offsetWidth / cellWidth));
+  return Math.max(1, Math.floor(div.clientWidth / cellWidth));
 }
 
 /**
