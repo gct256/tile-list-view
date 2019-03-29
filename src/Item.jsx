@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * Tile view list item component
  */
-export default class Item extends React.PureComponent {
+export class Item extends React.PureComponent {
   static propTypes = {
     /** element width of item. */
     width: PropTypes.number.isRequired,

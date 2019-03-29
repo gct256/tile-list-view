@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-declare class TileListView extends React.Component<TileListView.Props> {}
-
 declare namespace TileListView {
-  interface Props {
+  declare class TileListView extends React.Component<TileListViewProps> {}
+  interface TileListViewProps {
     items: React.ReactNode[];
     itemWidth: number;
     itemHeight: number;

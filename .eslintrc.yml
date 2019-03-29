@@ -9,7 +9,8 @@ rules:
     - off
   no-underscore-dangle:
     - error
-    -
-      allowAfterThis: true
+    - allowAfterThis: true
   react/no-array-index-key:
+    - off
+  import/prefer-default-export:
     - off

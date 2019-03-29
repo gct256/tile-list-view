@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styleProptype from 'react-style-proptype';
 
 import { getCols, getScroll, makeRange, mergeClassNames } from './utils';
-import Item from './Item';
+import { Item } from './Item';
 
 const componentStyle = {
   padding: 0,
@@ -33,7 +33,7 @@ const keyMap = {
 /**
  * Tile list view
  */
-export default class TileListView extends React.Component {
+export class TileListView extends React.Component {
   static propTypes = {
     /** tile items. */
     items: PropTypes.arrayOf(PropTypes.node).isRequired,
